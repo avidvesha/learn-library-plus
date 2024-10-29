@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:libraryplus/pages/splash.dart';
+import 'package:libraryplus/pages/home_page.dart';
 import 'package:libraryplus/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +12,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _nimController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
+
+  bool _isErrorVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                     )),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
@@ -79,14 +82,48 @@ class _LoginPageState extends State<LoginPage> {
                     )),
               ),
             ),
-            const SizedBox(
-              height: 50,
-            ),
+            if (!_isErrorVisible)
+              const SizedBox(
+                height: 48,
+              ),
+            if (_isErrorVisible)
+              const SizedBox(
+                height: 25,
+              ),
+            if (_isErrorVisible)
+              const Text(
+                'NIM atau password Anda salah, coba lagi!',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
             ElevatedButton(
+
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Splash()));
+                if (_nimController.text == '23610252' && _passwordController.text == '2810') {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomePage()));
+                      _isErrorVisible = false;
+                } else {
+                  setState(() {
+                    _isErrorVisible = true;
+                  });
+                }
               },
+              
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: textColor1,
+                  minimumSize: Size(296, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)
+                  )
+              ),
+
               child: Text(
                 'LOGIN',
                 style: TextStyle(
@@ -95,11 +132,6 @@ class _LoginPageState extends State<LoginPage> {
                   fontWeight: semiBold,
                 ),
               ),
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: textColor1,
-                  minimumSize: Size(296, 50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14))),
             )
           ],
         ),
