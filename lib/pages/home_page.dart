@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:libraryplus/pages/profile_page.dart';
 import 'package:libraryplus/theme.dart';
 import 'package:libraryplus/widgets/home_book_items.dart';
 import 'package:libraryplus/widgets/home_menu_items.dart';
@@ -243,7 +244,14 @@ class _HomePageState extends State<HomePage> {
   final ValueNotifier<int> _selectedIndexNotifier = ValueNotifier<int>(0);
 
   void _onItemTapped(int index) {
-    _selectedIndexNotifier.value = index;
+    if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfilePage()),
+      );
+    } else {
+      _selectedIndexNotifier.value = index;
+    }
   }
 }
 
